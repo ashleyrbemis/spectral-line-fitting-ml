@@ -47,7 +47,7 @@ To run this project, you'll need to set up the specified Conda environment.
 
 1.  **Clone the repository (once it's on GitHub):**
     ```bash
-    git clone [https://github.com/ashleyrbemis/spectral-line-fitting-ml.git](https://github.com/ashleyrbemis/spectral-line-fitting-ml.git)
+    git clone https://github.com/ashleyrbemis/spectral-line-fitting-ml.git
     cd spectral-line-fitting-ml
     ```
 
