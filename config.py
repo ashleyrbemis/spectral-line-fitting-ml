@@ -23,6 +23,12 @@ MODEL_SAVE_DIR = f'keras_{MAX_COMPONENTS_IN_DATA}_component_model'
 # Directory to save plots
 PLOT_SAVE_DIR = f'keras_{MAX_COMPONENTS_IN_DATA}_component_model_plots'
 
+# --- Data Generation Script Settings ---
+NUM_PLOT_SAMPLE_SPECTRA = 5 # The number of sample spectra plotted after generation
+MIN_COMPONENTS_PER_SPECTRUM = 1 # The minimum number of components a spectrum can have
+NUM_TRAINING_SPECTRA = 10000 
+NUM_VALIDATION_SPECTRA = 1000
+
 # --- Physical Data Ranges (used for data generation and clamping predictions) ---
 # These should reflect the expected ranges of your actual HCOP10 spectra.
 DATA_X_MIN = 1204.82262682

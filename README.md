@@ -8,6 +8,23 @@ This project implements a deep learning model (a Convolutional Neural Network) t
 
 ---
 
+## ✨ Key Features & Implementation Details
+
+* **Synthetic Data Generation:** Includes a data pipeline to generate large, labeled datasets of synthetic spectra. This enables controlled training and validation without reliance on scarce, real-world unlabeled data.
+
+* **Custom CNN Architecture:** The model, built in TensorFlow/Keras, uses custom multi-scale convolutional blocks. These blocks apply parallel convolutions with different kernel sizes to simultaneously learn both broad and sharp spectral features, improving parameter extraction.
+
+* **Data Preprocessing & Validation :** Implemented a robust data preprocessing workflow using scikit-learn. This involved feature scaling on the input spectra with StandardScaler to normalize the data, and partitioning the dataset into training and validation sets to prevent data leakage and ensure a fair evaluation of model performance.
+
+* **Supervised Training & Model Architecture:** Batch normalization is used throughout the network to stabilize and accelerate training. The model is trained via supervised learning, mapping an input spectrum to its corresponding ground truth labels: the amplitude, mean, and standard deviation (sigma) for each underlying Gaussian component.
+
+* **Custom Multi-Part Loss Function:** A key feature is the custom loss function that combines three weighted objectives to guide the model:
+    * **Parameter MSE:** Penalizes errors in the predicted parameters (amplitude, mean, sigma) for active components.
+    * **Sparsity Penalty (L1):** Encourages the model to correctly identify the number of components by penalizing non-zero amplitudes for inactive components.
+    * **Reconstruction Loss:** Enforces physical consistency by penalizing the difference between the true spectrum and the one reconstructed from the model's predicted parameters.
+
+---
+
 ## 🛠️ Technologies Used
 
 * **Python 3.10**
@@ -70,6 +87,52 @@ To run this project, you'll need to set up the specified Conda environment.
     # Then, install the remaining packages with Pip
     pip install numpy pandas tensorflow scikit-learn matplotlib seaborn h5py tqdm scipy
     ```
+
+---
+
+## ⚙️ Configuration & Customization
+
+All key parameters for data generation, model training, and evaluation are centralized in `config.py`. By editing this file, you can customize the entire workflow to match the characteristics of different datasets or to experiment with model architectures.
+
+### Data Generation Parameters
+
+* **Dataset Size & Components:**
+    * `NUM_TRAINING_SPECTRA`: The number of spectra in the training set.
+    * `NUM_VALIDATION_SPECTRA`: The number of spectra in the validation set.
+    * `MIN_COMPONENTS_PER_SPECTRUM`: The minimum number of Gaussian components a spectrum can have.
+    * `MAX_COMPONENTS_IN_DATA`: The maximum number of Gaussian components a single spectrum can have.
+
+* **Spectral & Component Properties:**
+    * `NUM_CHANNELS`: The number of data points (channels) in each 1D spectrum.
+    * `RMS_NOISE_RANGE`: The `(min, max)` range for the RMS noise level added to each spectrum.
+    * `COMP_AMP_RANGE`: The `(min, max)` range for component amplitude.
+    * `COMP_MEAN_RANGE`: The `(min, max)` range for component mean (position).
+    * `COMP_SIGMA_RANGE`: The `(min, max)` range for component sigma (width).
+
+### Model & Training Parameters
+
+* **Training Hyperparameters:**
+    * `EPOCHS`: The maximum number of training epochs.
+    * `BATCH_SIZE`: The number of spectra per batch during training.
+    * `LEARNING_RATE`: The initial learning rate for the Adam optimizer.
+    * `EARLY_STOPPING_PATIENCE`: Number of epochs with no improvement after which training will be stopped.
+    * `EARLY_STOPPING_TOLERANCE`: Minimum change in the monitored quantity to qualify as an improvement.
+
+* **Custom Loss Function Weights:**
+    * `SPARSITY_WEIGHT`: Controls the strength of the L1 penalty on inactive component amplitudes.
+    * `RECONSTRUCTION_WEIGHT`: Controls the strength of the penalty on the reconstructed spectrum's accuracy.
+
+### Evaluation & Plotting Parameters
+
+* **Plotting Settings:**
+    * `NUM_PLOT_SAMPLE_SPECTRA`: The number of sample spectra plotted after the *data generation* script runs.
+    * `NUM_PLOTS_EXAMPLES`: The number of sample spectra plotted by the *evaluation* script.
+    * `PLOT_AMP_THRESHOLD` / `PLOT_SIGMA_THRESHOLD`: Minimum predicted values for a component to be considered "active" and included in plots.
+
+* **Component Matching Criteria:** (For calculating R² score)
+    * `MATCH_MEAN_DIFF_MAX`: Maximum allowed difference in mean for a predicted component to match a true one.
+    * `MATCH_SIGMA_DIFF_FACTOR_MAX`: Maximum fractional difference in sigma for a match.
+    * `MATCH_AMP_DIFF_FACTOR_MAX`: Maximum fractional difference in amplitude for a match.
 
 ---
 

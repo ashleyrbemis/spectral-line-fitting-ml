@@ -112,28 +112,6 @@ if __name__ == '__main__':
     else:
         print("No active components found in the validation set for detailed evaluation.")
 
-    ## Calculate metrics specifically for N-component spectra to match your primary goal
-    #one_comp_val_indices = metadata_val[metadata_val['num_true_components'] == 1].index
-    #if len(one_comp_val_indices) > 0:
-    #    # Use config.MAX_COMPONENTS_IN_DATA for slicing y_val_params_processed, then take [:3]
-    #    # This correctly handles the padding.
-    #    y_true_one_comp = y_val_params_processed[one_comp_val_indices][:, :3] 
-    #    y_pred_one_comp = y_val_pred_original_units[one_comp_val_indices][:, :3]
-    #
-    #    mse_one_comp = mean_squared_error(y_true_one_comp, y_pred_one_comp)
-    #    r2_one_comp = r2_score(y_true_one_comp, y_pred_one_comp)
-    #    print(f"R^2: {r2_one_comp:.4f}")
-    #    print(f"MSE: {mse_one_comp:.6f}")
-    #
-    #    param_names = ['Amplitude', 'Mean (Index)', 'Sigma (Channels)']
-    #    for i, param_name in enumerate(param_names):
-    #        param_mse = mean_squared_error(y_true_one_comp[:, i], y_pred_one_comp[:, i])
-    #        param_r2 = r2_score(y_true_one_comp[:, i], y_pred_one_comp[:, i])
-    #        print(f"  {param_name} - MSE: {param_mse:.6f}, R2: {param_r2:.4f}")
-    #else:
-    #    print("No 1-component spectra found in the validation set for specific evaluation.")
-
-    # --- NEW: Evaluate Component Count Detection ---
     print("\n--- Component Count Detection Metrics ---")
     
     # Define a threshold for what counts as a 'detected' component

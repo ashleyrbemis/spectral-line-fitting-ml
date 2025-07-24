@@ -136,8 +136,8 @@ if __name__ == '__main__':
 
     print("\n--- Generating Full Training Data ---")
     generate_ml_training_data(
-        num_spectra = 10000, 
-        min_components = 1,
+        num_spectra = config.NUM_TRAINING_SPECTRA, 
+        min_components = config.MIN_COMPONENTS_PER_SPECTRUM,
         max_components = config.MAX_COMPONENTS_IN_DATA,  
         amplitude_range=(config.COMP_AMP_MIN, config.COMP_AMP_MAX),
         num_channels = config.NUM_CHANNELS,
@@ -146,14 +146,14 @@ if __name__ == '__main__':
         sigma_range=(config.COMP_SIGMA_MIN, config.COMP_SIGMA_MAX),
         rms_noise_range=(config.RMS_NOISE_MIN, config.RMS_NOISE_MAX),
         output_filepath=config.TRAINING_DATA_FILE, 
-        plot_sample_spectra=5,
+        plot_sample_spectra=config.NUM_PLOT_SAMPLE_SPECTRA,
     )
     print("\n--- Full Training Data Generation Complete ---")
 
     print("\n--- Generating General Validation Data ---")
     generate_ml_training_data(
-        num_spectra = 1000, 
-        min_components = 1,
+        num_spectra = config.NUM_VALIDATION_SPECTRA, 
+        min_components = config.MIN_COMPONENTS_PER_SPECTRUM,
         max_components = config.MAX_COMPONENTS_IN_DATA,  
         amplitude_range=(config.COMP_AMP_MIN, config.COMP_AMP_MAX),
         num_channels = config.NUM_CHANNELS,
@@ -162,7 +162,7 @@ if __name__ == '__main__':
         sigma_range=(config.COMP_SIGMA_MIN, config.COMP_SIGMA_MAX),
         rms_noise_range=(config.RMS_NOISE_MIN, config.RMS_NOISE_MAX),
         output_filepath=config.VALIDATION_DATA_FILE, 
-        plot_sample_spectra=5, 
+        plot_sample_spectra=config.NUM_PLOT_SAMPLE_SPECTRA, 
     )
     print("\n--- General Validation Data Generation Complete ---")
 
